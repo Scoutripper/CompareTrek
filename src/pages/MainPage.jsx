@@ -494,13 +494,13 @@ const MainPage = () => {
         {activeStep === 1 && (
           <div className="stepper font-medium w-full min-h-screen flex flex-col justify-between items-center px-4">
             {!isMobile && (
-              <Header link={"https://comparetreks.scoutripper.com/"} />
+              <Header link={"https://scoutripper.com/compare-treks/"} />
             )}
             {isMobile && (
               <div className="w-screen flex items-center justify-between flex-row pt-4 px-4">
                 <img src={Logo} alt="Logo" className="h-10" />
                 <a
-                  href={"https://comparetreks.scoutripper.com/"}
+                  href={"https://scoutripper.com/compare-treks/"}
                   target="_self"
                 >
                   <img src={Close} alt="Close" className="h-3 cursor-pointer" />
@@ -1270,13 +1270,13 @@ const MainPage = () => {
         {activeStep === 2 && (
           <div className="stepper font-medium w-full min-h-screen flex flex-col justify-between items-center">
             {!isMobile && (
-              <Header link={"https://comparetreks.scoutripper.com/"} />
+              <Header link={"https://scoutripper.com/compare-treks/"} />
             )}
             {isMobile && (
               <div className="w-screen flex items-center justify-between flex-row pt-4 px-4">
                 <img src={Logo} alt="Logo" className="h-10" />
                 <a
-                  href={"https://comparetreks.scoutripper.com/"}
+                  href={"https://scoutripper.com/compare-treks/"}
                   target="_self"
                 >
                   <img src={Close} alt="Close" className="h-3 cursor-pointer" />
@@ -1368,7 +1368,7 @@ _*Let's finalize and plan this together.*_
 
 For any questions or more details, feel free to reach out to the us. 
 
-Click here to compare more: https://comparetreks.scoutripper.com/
+Click here to compare more: https://scoutripper.com/compare-treks/
 
 Best regards,
 Scoutripper`;
@@ -2792,7 +2792,7 @@ Scoutripper`;
   
   For any questions or more details, feel free to reach out to the us. 
   
-  Click here to compare more: https://comparetreks.scoutripper.com/
+  Click here to compare more: https://scoutripper.com/compare-treks/
   
   Best regards,
   Scoutripper`;
