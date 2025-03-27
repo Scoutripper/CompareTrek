@@ -267,7 +267,7 @@ const MainPage = () => {
     const fetchLocations = async () => {
       try {
         const response = await axios.get(
-          `https://review.scoutripper.com/api/search_track.php?limit=1000&trek_name=${chosenTrekOne}`
+          `https://scoutripper.com/api/search_track?limit=1000&search=${chosenTrekOne}`
         );
         setSuggestions(response.data.data || []);
       } catch (error) {
@@ -286,7 +286,7 @@ const MainPage = () => {
     const fetchLocations = async () => {
       try {
         const response = await axios.get(
-          `https://review.scoutripper.com/api/search_track.php?limit=1000`
+          `https://scoutripper.com/api/search_track?limit=1000`
         );
         setAllSuggestions(response.data.data || []);
       } catch (error) {
@@ -330,59 +330,75 @@ const MainPage = () => {
                 <input
                   id="random_id_123"
                   className="destination w-full h-12 border border-[#DEDEDE] rounded-full px-6 py-2 font-medium text-base text-gray-500 focus:outline-none focus:ring-1 focus:ring-footer-main focus:border-side-line-big"
-                  value={chosenTrekOne.title}
+                  value={chosenTrekOne === "" ? "" : chosenTrekOne.title}
                   onChange={(e) => {
+                    setTempInputOne(e.target.value);
                     setChosenTrekOne(e.target.value);
                   }}
                   type="text"
-                  autoComplete="off"
                   name="random_name_123"
-                  placeholder={placeholder}
+                  placeholder={placeholderOne}
                   onFocus={() => {
-                    setShowDropdown(true);
-                    setPlaceholder("");
+                    setShowDropdownOne(true);
+                    setPlaceholderOne("");
+                    setValidTrekOne(false);
                   }}
                   onBlur={() => {
-                    setShowDropdown(false);
+                    setShowDropdownOne(false);
                     if (!chosenTrekOne) {
-                      setPlaceholder("Choose a trek to compare");
+                      setPlaceholderOne("Choose Trek");
+                    } else {
+                      if (allSuggestions.includes(chosenTrekOne)) {
+                        setValidTrekOne(true);
+                      }
                     }
                   }}
                 />
-                {showDropdown && suggestions.length > 0 && (
+                {showDropdownOne && allSuggestions.length > 0 && (
                   <ul className="absolute w-full bg-white rounded-lg mt-1 shadow-xl max-h-72 overflow-y-auto z-10 border border-[#DEDEDE] p-2">
-                    {suggestions.map((item) => (
-                      <li
-                        key={item.id}
-                        className="px-3 py-3 cursor-pointer hover:bg-side-line-big hover:bg-opacity-50 text-gray-500 hover:text-header-main flex justify-start items-center rounded-md"
-                        onMouseDown={() => {
-                          setChosenTrekOne(item);
-                          setTempInputOne(item.title);
-                          setValidTrekOne(true);
-                          setShowDropdown(false);
-                          handleNext();
-                        }}
-                      >
-                        <div className="flex flex-row justify-between items-center w-full">
-                          <div className="flex flex-row justify-start items-center">
-                            <img
-                              src={item.image_url}
-                              alt={item.title}
-                              className="w-10 h-10 object-cover rounded-sm"
-                            />
-                            <p className="pr-6 pl-4 text-sm font-semibold text-[#00393C] h-full">
-                              {item.title}
-                            </p>
+                    {allSuggestions
+                      .filter(
+                        (item) =>
+                          item.title
+                            .toLowerCase()
+                            .includes(tempInputOne.toLowerCase()) &&
+                          item.title !== chosenTrekTwo.title &&
+                          item.title !== chosenTrekThree.title &&
+                          item.title !== chosenTrekFour.title
+                      )
+                      .map((item) => (
+                        <li
+                          key={item.id}
+                          className="px-3 py-3 cursor-pointer hover:bg-side-line-big hover:bg-opacity-50 text-gray-500 hover:text-header-main flex justify-start items-center rounded-md"
+                          onMouseDown={() => {
+                            setChosenTrekOne(item);
+                            setTempInputOne(item.title);
+                            setValidTrekOne(true);
+                            setShowDropdown(false);
+                            setShowDropdownOne(false);
+                            handleNext();
+                          }}
+                        >
+                          <div className="flex flex-row justify-between items-center w-full">
+                            <div className="flex flex-row justify-start items-center">
+                              <img
+                                src={item.image_url}
+                                alt={item.title}
+                                className="w-10 h-10 object-cover rounded-sm"
+                              />
+                              <p className="pr-6 pl-4 text-sm font-semibold text-[#00393C] h-full">
+                                {item.title}
+                              </p>
+                            </div>
+                            <div className="flex flex-row justify-start items-center">
+                              <img src={Pin} alt="Pin" className="h-3" />
+                              <p className="text-xs font-normal text-[#A1A1A1] h-full pl-2">
+                                {item.locationName}
+                              </p>
+                            </div>
                           </div>
-                          <div className="flex flex-row justify-start items-center">
-                            <img src={Pin} alt="Pin" className="h-3" />
-                            <p className="text-xs font-normal text-[#A1A1A1] h-full pl-2">
-                              {item.locationName}
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                    ))}
+                        </li>
+                      ))}
                   </ul>
                 )}
               </div>
