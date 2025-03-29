@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180" height="48" viewBox="0 0 180 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M20 35L30 15L40 35H20Z M25 32L30 22L35 32H25Z" fill="white"/>
+  <path d="M50 18C50 16.8954 50.8954 16 52 16H158C159.105 16 160 16.8954 160 18V30C160 31.1046 159.105 32 158 32H52C50.8954 32 50 31.1046 50 30V18Z" fill="none" stroke="white" stroke-width="1"/>
+  <text x="55" y="28" font-family="Arial" font-size="16" font-weight="bold" fill="white">Scoutripper</text>
+</svg> 
