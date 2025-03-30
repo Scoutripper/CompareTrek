@@ -16,8 +16,8 @@ const footerLinks = [
     links: [
       { name: 'FAQ', href: '/faq' },
       { name: 'Support', href: '/support' },
-      { name: 'Privacy Policy', href: '/privacy' },
-      { name: 'Refund Policy', href: '/refund' },
+      { name: 'Privacy Policy', href: '/privacy-policy' },
+      { name: 'Refund Policy', href: '/refund-policy' },
     ],
   },
   {
@@ -26,7 +26,7 @@ const footerLinks = [
       { name: 'Treks', href: '/treks' },
       { name: 'Destinations', href: '/destinations' },
       { name: 'Custom Tours', href: '/custom-tours' },
-      { name: 'Group Bookings', href: '/group-bookings' },
+      { name: 'Group Bookings', href: '/group-booking' },
     ],
   },
 ];

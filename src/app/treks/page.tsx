@@ -8,35 +8,38 @@ import { motion } from 'framer-motion';
 // Sample trek data (replace with actual data from your API)
 const treks = [
   {
-    id: 1,
+    id: '1',
+    slug: 'valley-of-flowers',
     title: 'Valley of Flowers Trek',
     location: 'Uttarakhand',
     duration: '6 days',
     difficulty: 'Moderate',
     price: 12999,
-    image: '/images/trek1.jpg',
+    image: '/images/treks/valley-of-flowers.jpg',
     rating: 4.8,
     reviews: 127,
   },
   {
-    id: 2,
+    id: '2',
+    slug: 'hampta-pass',
     title: 'Hampta Pass Trek',
     location: 'Himachal Pradesh',
     duration: '5 days',
     difficulty: 'Moderate',
     price: 11999,
-    image: '/images/trek2.jpg',
+    image: '/images/treks/hampta-pass.jpg',
     rating: 4.7,
     reviews: 98,
   },
   {
-    id: 3,
+    id: '3',
+    slug: 'kedarkantha',
     title: 'Kedarkantha Summit',
     location: 'Uttarakhand',
     duration: '6 days',
     difficulty: 'Easy-Moderate',
     price: 10999,
-    image: '/images/trek3.jpg',
+    image: '/images/treks/kedarkantha.jpg',
     rating: 4.9,
     reviews: 156,
   },
@@ -130,7 +133,7 @@ export default function TreksPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
             >
-              <Link href={`/treks/${trek.id}`}>
+              <Link href={`/treks/${trek.slug}`}>
                 <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                   <div className="relative h-48">
                     <Image

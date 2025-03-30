@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -22,7 +22,22 @@ const mobileNavLinks = [
 
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    // Check if user is authenticated (you should implement your own auth check logic)
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('/api/auth/check');
+        const data = await response.json();
+        setIsAuthenticated(data.authenticated);
+      } catch (error) {
+        setIsAuthenticated(false);
+      }
+    };
+    checkAuth();
+  }, []);
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const href = e.currentTarget.getAttribute('href');
@@ -31,6 +46,38 @@ export default function Navigation() {
       console.error('Invalid link:', href);
     }
     setIsMobileMenuOpen(false);
+  };
+
+  const renderAuthButtons = () => {
+    if (isAuthenticated) {
+      return (
+        <Link
+          href="/dashboard"
+          onClick={handleLinkClick}
+          className="bg-[#85d4d6] text-white hover:bg-[#6bc4c6] px-4 py-2 rounded-lg text-base font-medium transition-colors"
+        >
+          Dashboard
+        </Link>
+      );
+    }
+    return (
+      <>
+        <Link
+          href="/auth/login"
+          onClick={handleLinkClick}
+          className="text-gray-700 hover:text-[#85d4d6] px-4 py-2 text-base font-medium"
+        >
+          Login
+        </Link>
+        <Link
+          href="/auth/signup"
+          onClick={handleLinkClick}
+          className="bg-[#85d4d6] text-white hover:bg-[#6bc4c6] px-4 py-2 rounded-lg text-base font-medium transition-colors"
+        >
+          Sign Up
+        </Link>
+      </>
+    );
   };
 
   return (
@@ -45,6 +92,10 @@ export default function Navigation() {
               width={180}
               height={40}
               priority
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = '/images/logo/logo-fallback.png';
+              }}
             />
           </Link>
 
@@ -65,20 +116,7 @@ export default function Navigation() {
               </Link>
             ))}
             <div className="flex items-center space-x-4 ml-4">
-              <Link
-                href="/auth/login"
-                onClick={handleLinkClick}
-                className="text-gray-700 hover:text-[#85d4d6] px-4 py-2 text-base font-medium"
-              >
-                Login
-              </Link>
-              <Link
-                href="/auth/signup"
-                onClick={handleLinkClick}
-                className="bg-[#85d4d6] text-white hover:bg-[#6bc4c6] px-4 py-2 rounded-lg text-base font-medium transition-colors"
-              >
-                Sign Up
-              </Link>
+              {renderAuthButtons()}
             </div>
           </div>
 
@@ -128,20 +166,32 @@ export default function Navigation() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/auth/login"
-            onClick={handleLinkClick}
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-[#85d4d6]"
-          >
-            Login
-          </Link>
-          <Link
-            href="/auth/signup"
-            onClick={handleLinkClick}
-            className="block px-3 py-2 rounded-md text-base font-medium bg-[#85d4d6] text-white hover:bg-[#6bc4c6]"
-          >
-            Sign Up
-          </Link>
+          {isAuthenticated ? (
+            <Link
+              href="/dashboard"
+              onClick={handleLinkClick}
+              className="block px-3 py-2 rounded-md text-base font-medium bg-[#85d4d6] text-white hover:bg-[#6bc4c6]"
+            >
+              Dashboard
+            </Link>
+          ) : (
+            <>
+              <Link
+                href="/auth/login"
+                onClick={handleLinkClick}
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-[#85d4d6]"
+              >
+                Login
+              </Link>
+              <Link
+                href="/auth/signup"
+                onClick={handleLinkClick}
+                className="block px-3 py-2 rounded-md text-base font-medium bg-[#85d4d6] text-white hover:bg-[#6bc4c6]"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>

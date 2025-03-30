@@ -9,43 +9,43 @@ import SearchBar from './SearchBar';
 
 const images = [
   {
-    src: '/images/hero.jpg',
+    src: '/images/hero/hero-1.jpg',
     alt: 'Majestic Himalayan peaks',
     title: 'Explore the Himalayas',
     description: 'Discover breathtaking views and unforgettable experiences',
   },
   {
-    src: '/images/uttarakhand.jpg',
+    src: '/images/destinations/uttarakhand.jpg',
     alt: 'Uttarakhand mountain landscape',
     title: 'Uttarakhand Adventures',
     description: 'Experience the magic of Uttarakhand\'s pristine trails',
   },
   {
-    src: '/images/sikkim.jpg',
+    src: '/images/destinations/sikkim.jpg',
     alt: 'Sikkim mountain view',
     title: 'Sikkim Treks',
     description: 'Explore the hidden gems of Northeast India',
   },
   {
-    src: '/images/himachal.jpg',
+    src: '/images/destinations/himachal.jpg',
     alt: 'Himachal Pradesh mountains',
     title: 'Himachal Pradesh',
     description: 'Trek through the majestic mountains of Himachal',
   },
   {
-    src: '/images/trek1.jpg',
+    src: '/images/treks/valley-of-flowers.jpg',
     alt: 'Valley of Flowers Trek',
     title: 'Valley of Flowers',
     description: 'A paradise of alpine flowers and pristine meadows',
   },
   {
-    src: '/images/trek2.jpg',
+    src: '/images/treks/hampta-pass.jpg',
     alt: 'Hampta Pass Trek',
     title: 'Hampta Pass',
     description: 'Cross the dramatic mountain pass at 14,100 ft',
   },
   {
-    src: '/images/trek3.jpg',
+    src: '/images/treks/kedarkantha.jpg',
     alt: 'Kedarkantha Summit',
     title: 'Kedarkantha Summit',
     description: 'Experience the thrill of winter trekking',

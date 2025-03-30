@@ -10,24 +10,26 @@ import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline';
 // Sample favorite treks (replace with actual data from your API/localStorage)
 const sampleFavorites = [
   {
-    id: 1,
+    id: '1',
+    slug: 'valley-of-flowers',
     title: 'Valley of Flowers Trek',
     location: 'Uttarakhand',
     duration: '6 days',
     difficulty: 'Moderate',
     price: 12999,
-    image: '/images/trek1.jpg',
+    image: '/images/treks/valley-of-flowers.jpg',
     rating: 4.8,
     reviews: 127,
   },
   {
-    id: 2,
+    id: '2',
+    slug: 'hampta-pass',
     title: 'Hampta Pass Trek',
     location: 'Himachal Pradesh',
     duration: '5 days',
     difficulty: 'Moderate',
     price: 11999,
-    image: '/images/trek2.jpg',
+    image: '/images/treks/hampta-pass.jpg',
     rating: 4.7,
     reviews: 98,
   },
@@ -49,7 +51,7 @@ export default function FavoritesPage() {
     setIsLoading(false);
   }, []);
 
-  const removeFavorite = (trekId: number) => {
+  const removeFavorite = (trekId: string) => {
     setFavorites(prev => prev.filter(trek => trek.id !== trekId));
     // TODO: Update API/localStorage
   };
@@ -123,7 +125,7 @@ export default function FavoritesPage() {
                     </button>
                   </div>
                   <div className="p-6">
-                    <Link href={`/treks/${trek.id}`}>
+                    <Link href={`/treks/${trek.slug}`}>
                       <div className="flex justify-between items-start">
                         <h3 className="text-xl font-semibold text-gray-900 hover:text-primary-600">
                           {trek.title}

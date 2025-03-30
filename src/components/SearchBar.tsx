@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { MagnifyingGlassIcon, MapPinIcon } from '@heroicons/react/24/outline';
 import { PopularSearch, SearchResult } from '@/types';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const popularSearches: PopularSearch[] = [
   { name: 'Valley of Flowers Trek', location: 'Uttarakhand' },
@@ -37,14 +39,23 @@ export default function SearchBar() {
     setError(null);
 
     try {
-      // Replace with actual API call
-      const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`);
-      if (!response.ok) throw new Error('Search failed');
+      const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
       setResults(data);
     } catch (err) {
-      setError('Failed to fetch search results');
+      setError('Failed to fetch search results. Please try again.');
       console.error('Search error:', err);
+      setResults([]);
     } finally {
       setIsLoading(false);
     }
@@ -65,11 +76,9 @@ export default function SearchBar() {
 
   return (
     <div className="relative max-w-3xl mx-auto w-full">
-      <div 
-        className={`relative transition-all duration-300 ${
-          isFocused ? 'transform -translate-y-1' : ''
-        }`}
-      >
+      <div className={`relative transition-all duration-300 ${
+        isFocused ? 'transform -translate-y-1' : ''
+      }`}>
         <input
           type="text"
           value={query}
@@ -82,68 +91,78 @@ export default function SearchBar() {
           onBlur={() => setTimeout(() => setIsFocused(false), 200)}
           aria-label="Search treks and destinations"
         />
+        <div className="absolute right-4 top-1/2 -translate-y-1/2">
+          {isLoading && (
+            <div className="h-5 w-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+          )}
+        </div>
         <MagnifyingGlassIcon 
-          className={`h-6 w-6 absolute left-5 top-1/2 -translate-y-1/2 transition-colors duration-300 ${isFocused ? 'text-white' : 'text-white/70'}`}
+          className={`h-6 w-6 absolute left-5 top-1/2 -translate-y-1/2 transition-colors duration-300 ${
+            isFocused ? 'text-white' : 'text-white/70'
+          }`}
           aria-hidden="true"
         />
       </div>
 
-      <div 
-        className={`absolute mt-2 inset-x-0 bg-white rounded-xl shadow-lg border border-gray-100 
-          divide-y divide-gray-100 transform transition-all duration-300 origin-top
-          ${isFocused ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}
-        role="dialog"
-        aria-label="Search results"
-      >
-        <div className="p-3">
-          {isLoading ? (
-            <div className="flex items-center justify-center py-4">
-              <div className="h-6 w-6 border-2 border-primary-600 border-t-transparent rounded-full animate-spin" />
-            </div>
-          ) : error ? (
-            <div className="text-red-600 text-sm px-3 py-2">{error}</div>
+      {/* Search Results */}
+      {(isFocused && query) && (
+        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden max-h-96 overflow-y-auto">
+          {error ? (
+            <div className="p-4 text-red-600 text-sm">{error}</div>
           ) : results.length > 0 ? (
-            <div className="space-y-1">
+            <div className="divide-y divide-gray-100">
               {results.map((result) => (
-                <button
+                <Link
                   key={result.id}
-                  className="flex items-center w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg group transition-colors"
+                  href={result.url}
+                  className="flex items-start p-4 hover:bg-gray-50 transition-colors"
                 >
-                  <span className="flex-grow">{result.title}</span>
-                  <span className="flex items-center text-gray-400 group-hover:text-gray-600">
-                    <MapPinIcon className="h-4 w-4 mr-1" aria-hidden="true" />
-                    {result.location}
-                  </span>
-                </button>
+                  <div className="relative h-16 w-16 rounded-lg overflow-hidden flex-shrink-0">
+                    <Image
+                      src={result.imageUrl}
+                      alt={result.title}
+                      fill
+                      className="object-cover"
+                      sizes="64px"
+                    />
+                  </div>
+                  <div className="ml-4 flex-1">
+                    <h4 className="text-sm font-medium text-gray-900">{result.title}</h4>
+                    <p className="text-sm text-gray-500 mt-1 flex items-center">
+                      <MapPinIcon className="h-4 w-4 mr-1" />
+                      {result.location}
+                    </p>
+                  </div>
+                </Link>
               ))}
             </div>
-          ) : query ? (
-            <div className="text-gray-500 text-sm px-3 py-2">No results found</div>
-          ) : (
-            <>
-              <div className="text-xs font-medium text-gray-500 px-3 mb-2">Popular Searches</div>
-              <div className="space-y-1">
-                {popularSearches.map((item) => (
+          ) : query.length > 0 && !isLoading ? (
+            <div className="p-4 text-gray-500 text-sm">No results found</div>
+          ) : null}
+
+          {/* Popular Searches */}
+          {!query && (
+            <div className="p-4">
+              <h3 className="text-xs font-medium text-gray-500 uppercase mb-3">Popular Searches</h3>
+              <div className="space-y-2">
+                {popularSearches.map((search) => (
                   <button
-                    key={item.name}
-                    className="flex items-center w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg group transition-colors"
+                    key={search.name}
                     onClick={() => {
-                      setQuery(item.name);
-                      handleSearch(item.name);
+                      setQuery(search.name);
+                      handleSearch(search.name);
                     }}
+                    className="block w-full text-left p-2 rounded hover:bg-gray-50 transition-colors"
                   >
-                    <span className="flex-grow">{item.name}</span>
-                    <span className="flex items-center text-gray-400 group-hover:text-gray-600">
-                      <MapPinIcon className="h-4 w-4 mr-1" aria-hidden="true" />
-                      {item.location}
-                    </span>
+                    <p className="text-sm font-medium text-gray-900">{search.name}</p>
+                    <p className="text-xs text-gray-500 mt-1">{search.location}</p>
                   </button>
                 ))}
               </div>
-            </>
+            </div>
           )}
         </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 export interface Trek {
   id: string;
+  slug: string;
   title: string;
   location: string;
   imageUrl: string;
@@ -25,5 +26,5 @@ export interface SearchResult {
   title: string;
   location: string;
   imageUrl: string;
-  rating: number;
+  url: string;
 } 

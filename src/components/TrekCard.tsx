@@ -13,6 +13,7 @@ interface TrekCardProps extends Trek {
 
 export default function TrekCard({
   id,
+  slug,
   title,
   location,
   imageUrl,
@@ -43,7 +44,7 @@ export default function TrekCard({
 
   return (
     <div className="group bg-white rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
-      <Link href={`/treks/${id}`} className="block relative aspect-[4/3] overflow-hidden">
+      <Link href={`/treks/${slug}`} className="block relative aspect-[4/3] overflow-hidden">
         <Image
           src={imageUrl}
           alt={`${title} trek in ${location}`}
@@ -77,7 +78,7 @@ export default function TrekCard({
       </Link>
       
       <div className="p-4">
-        <Link href={`/treks/${id}`}>
+        <Link href={`/treks/${slug}`}>
           <h3 className="font-medium text-gray-900 mb-1 hover:text-primary-600 transition-colors">
             {title}
           </h3>

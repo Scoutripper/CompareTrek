@@ -1,10 +1,8 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
 import PageBanner from '@/components/PageBanner';
 import DestinationCard from '@/components/DestinationCard';
+import { motion } from 'framer-motion';
 
 const destinations = [
   {
@@ -29,37 +27,31 @@ const destinations = [
     description: 'Experience the unique blend of culture and nature in the mystical state of Sikkim.',
   },
   {
-    id: 'ladakh',
     name: 'Ladakh',
-    image: '/images/ladakh.jpg',
+    image: '/images/destinations/ladakh.jpg',
+    trekCount: 10,
+    slug: 'ladakh',
     description: 'The land of high passes and pristine lakes.',
-    treks: 10,
-    popularTreks: ['Markha Valley', 'Stok Kangri', 'Chadar Trek'],
-    bestTime: 'June to September',
   },
   {
-    id: 'kerala',
     name: 'Kerala',
-    image: '/images/kerala.jpg',
+    image: '/images/destinations/kerala.jpg',
+    trekCount: 6,
+    slug: 'kerala',
     description: 'Lush green trails through the Western Ghats.',
-    treks: 6,
-    popularTreks: ['Chembra Peak', 'Agasthyakoodam', 'Meesapulimala'],
-    bestTime: 'October to February',
   },
   {
-    id: 'karnataka',
     name: 'Karnataka',
-    image: '/images/karnataka.jpg',
+    image: '/images/destinations/karnataka.jpg',
+    trekCount: 7,
+    slug: 'karnataka',
     description: 'Beautiful trails through the Western Ghats of South India.',
-    treks: 7,
-    popularTreks: ['Kudremukh', 'Kumara Parvatha', 'Tadiandamol'],
-    bestTime: 'October to February',
   }
 ];
 
 export default function DestinationsPage() {
   return (
-    <div>
+    <div className="min-h-screen">
       <PageBanner
         title="Popular Destinations"
         description="Explore the most breathtaking locations across India"
@@ -68,17 +60,28 @@ export default function DestinationsPage() {
       />
       
       <section className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {destinations.map((destination) => (
-            <DestinationCard
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          {destinations.map((destination, index) => (
+            <motion.div
               key={destination.slug}
-              name={destination.name}
-              image={destination.image}
-              trekCount={destination.trekCount}
-              slug={destination.slug}
-            />
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <DestinationCard
+                name={destination.name}
+                image={destination.image}
+                trekCount={destination.trekCount}
+                slug={destination.slug}
+              />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
     </div>
   );

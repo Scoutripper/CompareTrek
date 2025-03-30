@@ -11,9 +11,10 @@ import { Trek, Destination } from '@/types';
 const featuredTreks: Trek[] = [
   {
     id: '1',
+    slug: 'valley-of-flowers',
     title: 'Valley of Flowers Trek',
     location: 'Uttarakhand, India',
-    imageUrl: '/images/trek1.jpg',
+    imageUrl: '/images/treks/valley-of-flowers.jpg',
     rating: 4.8,
     reviewCount: 124,
     likes: 356,
@@ -21,9 +22,10 @@ const featuredTreks: Trek[] = [
   },
   {
     id: '2',
+    slug: 'hampta-pass',
     title: 'Hampta Pass Trek',
     location: 'Himachal Pradesh, India',
-    imageUrl: '/images/trek2.jpg',
+    imageUrl: '/images/treks/hampta-pass.jpg',
     rating: 4.6,
     reviewCount: 98,
     likes: 287,
@@ -31,9 +33,10 @@ const featuredTreks: Trek[] = [
   },
   {
     id: '3',
+    slug: 'kedarkantha',
     title: 'Kedarkantha Summit',
     location: 'Uttarakhand, India',
-    imageUrl: '/images/trek3.jpg',
+    imageUrl: '/images/treks/kedarkantha.jpg',
     rating: 4.9,
     reviewCount: 156,
     likes: 423,
